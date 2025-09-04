@@ -1,5 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import sgMail from "@sendgrid/mail"
+cat > "src/app/api/audio/notify/[id]/route.ts" << 'EOF'
+import { prisma } from "@/lib/prisma"
+import sgMail from "@sendgrid/mail"
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!)
 
@@ -48,4 +51,3 @@ export async function POST(
 
   return new Response("ok")
 }
-
