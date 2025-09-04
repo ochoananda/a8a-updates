@@ -1,17 +1,4 @@
-// src/app/page.tsx
-export default function Home() {
-  return (
-    <main className="min-h-screen flex items-center justify-center p-6">
-      <div className="w-full max-w-2xl space-y-8 text-center">
-        <div className="flex flex-col items-center gap-3">
-          {/* If you add /public/logo.png, it will show here */}
-          <img
-            src="/logo.png"
-            alt="A8A"
-            className="h-16 w-auto"
-            onError={(e)=>{ (e.currentTarget as HTMLImageElement).style.display='none' }}
-          />
- export default function HomePage() {
+export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center p-8">
       {/* Logo */}
@@ -28,7 +15,7 @@ export default function Home() {
       </p>
 
       {/* Navigation buttons */}
-      <div className="flex space-x-4">
+      <div className="flex flex-wrap gap-3 justify-center">
         <a
           href="/upload"
           className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700"
@@ -48,9 +35,9 @@ export default function Home() {
           Suscribirse
         </a>
       </div>
-    </div>
-  )
-}
-}
 
+      <p className="mt-10 text-xs text-gray-400">© {new Date().getFullYear()} A8A</p>
+    </div>
+  );
+}
 
