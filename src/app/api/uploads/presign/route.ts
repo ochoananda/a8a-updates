@@ -3,7 +3,7 @@ import crypto from "node:crypto"
 import { S3Client } from "@aws-sdk/client-s3"
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post"
 
-const s3 = new S3Client({ region: process.env.AWS_REGION })
+const s3 = new S3Client({ region: "us-east-2" })
 
 export async function POST(req: NextRequest) {
   const { filename, mime } = await req.json()
