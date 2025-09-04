@@ -1,0 +1,40 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client { 
+  provider = "prisma-client-js" 
+}
+
+model Client {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  phone      String?
+  active     Boolean  @default(true)
+  unsubToken String   @unique @default(cuid())
+  createdAt  DateTime @default(now())
+}
+
+model Audio {
+  id         String   @id @default(cuid())
+  title      String
+  s3Key      String
+  publicUrl  String?
+  durationMs Int?
+  published  Boolean  @default(false)
+  notifiedAt DateTime?
+  createdAt  DateTime @default(now())
+}
+
+model Subscriber {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  stripeCustId String?  @unique
+  stripeSubId  String?  @unique
+  plan         String   @default("basic")
+  status       String   @default("active")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
