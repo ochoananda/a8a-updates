@@ -1,30 +1,29 @@
-export default function AdminLogin() {
-  return (
-    <main className="min-h-screen flex items-center justify-center p-6">
-      <form
-        action="/api/admin/login"
-        method="post"
-        className="w-full max-w-sm space-y-4 border rounded-2xl p-6"
-      >
-        <h1 className="text-xl font-semibold text-center">Admin Login</h1>
-        <input
-          type="password"
-          name="key"
-          placeholder="Enter admin key"
-          className="border rounded w-full p-2"
-          required
-        />
-        <button
-          type="submit"
-          className="w-full rounded bg-blue-600 text-white py-2"
-        >
-          Sign in
-        </button>
-        <p className="text-xs text-gray-500 text-center">
-          You’ll stay signed in for 7 days on this device.
-        </p>
-      </form>
-    </main>
-  )
+export const runtime = "nodejs"
+
+import { NextResponse } from "next/server"
+
+export async function POST(req: Request) {
+  const form = await req.formData()
+  const key = String(form.get("key") || "")
+  const adminKey = process.env.ADMIN_KEY
+
+  if (!adminKey) {
+    return new NextResponse("Server misconfigured: ADMIN_KEY missing", { status: 500 })
+  }
+
+  if (key !== adminKey) {
+    return new NextResponse("Invalid key", { status: 401 })
+  }
+
+  const res = NextResponse.redirect(new URL("/upload", req.url))
+  res.cookies.set("a8a_admin", "ok", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+  })
+  return res
 }
+
 
