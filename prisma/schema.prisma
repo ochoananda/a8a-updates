@@ -1,16 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client { 
-  provider = "prisma-client-js" 
+enum Tier {
+  free
+  standard
+  premium
 }
 
 model Client {
   id         String   @id @default(cuid())
   name       String
   email      String   @unique
+  tier       Tier     @default(free)
   phone      String?
   active     Boolean  @default(true)
   unsubToken String   @unique @default(cuid())
@@ -18,14 +25,14 @@ model Client {
 }
 
 model Audio {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   title      String
   s3Key      String
   publicUrl  String?
   durationMs Int?
-  published  Boolean  @default(false)
+  published  Boolean   @default(false)
   notifiedAt DateTime?
-  createdAt  DateTime @default(now())
+  createdAt  DateTime  @default(now())
 }
 
 model Subscriber {
